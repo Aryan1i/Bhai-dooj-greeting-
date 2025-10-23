@@ -106,7 +106,7 @@
     </div>
 
     <audio id="bg-music" loop>
-      <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_9a9f0706f8.mp3" type="audio/mp3" />
+      <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mp3" />
     </audio>
 
     <script>
@@ -147,14 +147,20 @@
 
       setInterval(drawConfetti, 20);
 
-      // Play button logic
+      // Play button logic with error handling
       const playBtn = document.getElementById('playBtn');
       const music = document.getElementById('bg-music');
-      playBtn.addEventListener('click', () => {
-        music.play();
-        playBtn.textContent = "Music Playing 🎶";
-        playBtn.disabled = true;
-        playBtn.style.opacity = "0.8";
+
+      playBtn.addEventListener('click', async () => {
+        try {
+          await music.play();
+          playBtn.textContent = "Music Playing 🎶";
+          playBtn.disabled = true;
+          playBtn.style.opacity = "0.8";
+        } catch (err) {
+          alert("Music playback blocked. Try clicking again or check your browser settings.");
+          console.error(err);
+        }
       });
     </script>
   </body>
