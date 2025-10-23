@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>For Amrita ❤️</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        height: 100vh;
+        width: 100vw;
+        background: linear-gradient(120deg, #f6d365, #fda085);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: "Poppins", sans-serif;
+        overflow: hidden;
+      }
+
+      .container {
+        text-align: center;
+        color: white;
+        animation: fadeIn 3s ease-in;
+      }
+
+      h1 {
+        font-size: 3rem;
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+      }
+
+      h2 {
+        font-size: 2rem;
+        margin-top: 1rem;
+      }
+
+      p {
+        margin-top: 2rem;
+        font-size: 1.3rem;
+        font-weight: 500;
+      }
+
+      .heart {
+        color: #ff3366;
+        font-size: 2rem;
+        animation: beat 1s infinite;
+      }
+
+      @keyframes beat {
+        0%, 100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.2);
+        }
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+      }
+
+      #playBtn {
+        margin-top: 25px;
+        background: #ff3366;
+        border: none;
+        color: white;
+        padding: 12px 28px;
+        border-radius: 25px;
+        font-size: 1rem;
+        cursor: pointer;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+        transition: transform 0.2s;
+      }
+
+      #playBtn:hover {
+        transform: scale(1.05);
+        background: #ff6688;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="confetti"></canvas>
+
+    <div class="container">
+      <h1>Happy Bhai Dooj, Amrita ❤️</h1>
+      <h2>From Aryan 💫</h2>
+      <p>You're the best sister anyone could ask for!<br />Wishing you endless happiness and love 💖</p>
+      <div class="heart">💝</div>
+      <button id="playBtn">Play Music 🎵</button>
+    </div>
+
+    <audio id="bg-music" loop>
+      <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_9a9f0706f8.mp3" type="audio/mp3" />
+    </audio>
+
+    <script>
+      // Confetti animation
+      const canvas = document.getElementById('confetti');
+      const ctx = canvas.getContext('2d');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const confetti = Array.from({ length: 150 }).map(() => ({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 6 + 2,
+        d: Math.random() * 0.8 + 0.2,
+        color: `hsl(${Math.random() * 360}, 70%, 60%)`
+      }));
+
+      function drawConfetti() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        confetti.forEach((p) => {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = p.color;
+          ctx.fill();
+        });
+        updateConfetti();
+      }
+
+      function updateConfetti() {
+        confetti.forEach((p) => {
+          p.y += p.d;
+          if (p.y > canvas.height) {
+            p.y = 0;
+            p.x = Math.random() * canvas.width;
+          }
+        });
+      }
+
+      setInterval(drawConfetti, 20);
+
+      // Play button logic
+      const playBtn = document.getElementById('playBtn');
+      const music = document.getElementById('bg-music');
+      playBtn.addEventListener('click', () => {
+        music.play();
+        playBtn.textContent = "Music Playing 🎶";
+        playBtn.disabled = true;
+        playBtn.style.opacity = "0.8";
+      });
+    </script>
+  </body>
+</html>
